@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Dating Network
  * Description: Veilige datingsite voor singles met wederzijdse matching, interne chat en uitlegbare matchscore.
- * Version: 0.2.0
+ * Version: 0.4.1
  * Author: Alexander van Dijl
  * Text Domain: dating-network
  */
@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('DN_VERSION', '0.2.0');
+define('DN_VERSION', '0.4.1');
 define('DN_FILE', __FILE__);
 define('DN_DIR', plugin_dir_path(__FILE__));
 define('DN_URL', plugin_dir_url(__FILE__));
