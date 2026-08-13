@@ -1,0 +1,166 @@
+name: Build and publish Dating Network
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'dating-network/**'
+      - '.github/workflows/release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dating-network-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Validate, package and publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          tools: none
+          coverage: none
+
+      - name: Read plugin version
+        id: version
+        shell: bash
+        run: |
+          set -euo pipefail
+          PLUGIN_FILE='dating-network/dating-network.php'
+          test -f "$PLUGIN_FILE"
+
+          VERSION=$(grep -i '^[[:space:]]*\* Version:' "$PLUGIN_FILE" \
+            | head -n1 \
+            | sed -E 's/.*Version:[[:space:]]*//' \
+            | tr -d '\r' \
+            | xargs)
+
+          CONSTANT=$(grep "define('DN_VERSION'" "$PLUGIN_FILE" \
+            | head -n1 \
+            | sed -E "s/.*'([0-9]+\.[0-9]+\.[0-9]+)'.*/\1/")
+
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || {
+            echo "Invalid plugin version: $VERSION"
+            exit 1
+          }
+
+          [ "$VERSION" = "$CONSTANT" ] || {
+            echo "Header version ($VERSION) and DN_VERSION ($CONSTANT) differ"
+            exit 1
+          }
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: PHP syntax check
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' file; do
+            php -l "$file"
+          done < <(find dating-network -type f -name '*.php' -print0)
+
+      - name: Build installable ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf build dating-network.zip
+          mkdir -p build
+          cp -R dating-network build/dating-network
+          find build/dating-network -type f \( \
+            -name '.DS_Store' -o \
+            -name 'Thumbs.db' -o \
+            -name '*.log' \
+          \) -delete
+
+          (cd build && zip -qr ../dating-network.zip dating-network)
+
+          unzip -l dating-network.zip \
+            | grep -q 'dating-network/dating-network.php'
+
+      - name: Calculate checksum
+        id: checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHECKSUM=$(sha256sum dating-network.zip | awk '{print $1}')
+          echo "sha256=$CHECKSUM" >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="v${VERSION}"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dating-network.zip --clobber
+          else
+            gh release create "$TAG" dating-network.zip \
+              --target "${GITHUB_SHA}" \
+              --title "Dating Network ${VERSION}" \
+              --notes "Automatische Dating Network release ${VERSION}."
+          fi
+
+      - name: Generate WordPress update metadata
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          CHECKSUM: ${{ steps.checksum.outputs.sha256 }}
+          REPOSITORY: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          cat > update.json <<EOF
+          {
+            "name": "Dating Network",
+            "slug": "dating-network",
+            "version": "${VERSION}",
+            "download_url": "https://github.com/${REPOSITORY}/releases/download/v${VERSION}/dating-network.zip",
+            "checksum_sha256": "${CHECKSUM}",
+            "requires": "6.5",
+            "tested": "6.8",
+            "requires_php": "8.0",
+            "homepage": "https://dating.alexandervandijl.nl/",
+            "sections": {
+              "description": "Veilige datingsite voor singles met wederzijdse matching, interne chat en uitlegbare matchscore.",
+              "changelog": "Dating Network ${VERSION}."
+            }
+          }
+          EOF
+
+          python3 -m json.tool update.json >/dev/null
+
+      - name: Publish update.json
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          git add update.json
+
+          if git diff --cached --quiet; then
+            echo 'update.json is already current.'
+            exit 0
+          fi
+
+          git commit -m "Publish Dating Network ${VERSION} update metadata"
+          git push origin HEAD:main
