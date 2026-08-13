@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Dating Network
  * Description: Veilige datingsite voor singles met wederzijdse matching, interne chat en uitlegbare matchscore.
- * Version: 0.2.0
+ * Version: 0.3.0
  * Author: Alexander van Dijl
  * Text Domain: dating-network
  */
@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('DN_VERSION', '0.2.0');
+define('DN_VERSION', '0.3.0');
 define('DN_FILE', __FILE__);
 define('DN_DIR', plugin_dir_path(__FILE__));
 define('DN_URL', plugin_dir_url(__FILE__));
@@ -21,6 +21,7 @@ require_once DN_DIR . 'includes/class-dn-safety.php';
 require_once DN_DIR . 'includes/class-dn-match.php';
 require_once DN_DIR . 'includes/class-dn-core.php';
 require_once DN_DIR . 'includes/class-dn-shortcodes.php';
+require_once DN_DIR . 'includes/class-dn-homepage.php';
 require_once DN_DIR . 'includes/class-dn-admin.php';
 require_once DN_DIR . 'includes/class-dn-updater.php';
 
@@ -31,6 +32,7 @@ add_action('plugins_loaded', static function () {
     DN_Updater::init();
     DN_Core::init();
     DN_Shortcodes::init();
+    DN_Homepage::init();
     if (is_admin()) {
         DN_Admin::init();
     }
