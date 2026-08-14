@@ -44,6 +44,7 @@ class DN_Core
         if($key==='home'){wp_enqueue_style('dating-network-home',DN_URL.'assets/home.css',['dating-network'],DN_VERSION);}
         else{wp_enqueue_style('dating-network-app',DN_URL.'assets/app.css',['dating-network'],DN_VERSION);}
         wp_enqueue_style('dating-network-branding',DN_URL.'assets/branding.css',['dating-network'],DN_VERSION);
+        wp_enqueue_style('dating-network-growth',DN_URL.'assets/growth.css',['dating-network-branding'],DN_VERSION);
         wp_enqueue_script('dating-network',DN_URL.'assets/dn.js',[],DN_VERSION,true);
     }
 
