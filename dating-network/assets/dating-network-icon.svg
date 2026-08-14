@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Dating Network</title>
+  <defs>
+    <linearGradient id="dn-heart" x1="72" y1="64" x2="430" y2="448" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#BE1D4E"/>
+      <stop offset="1" stop-color="#E74C6C"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="118" fill="#FFF8FA"/>
+  <path d="M256 421C226 392 119 315 91 230C64 148 110 88 180 88C217 88 242 108 256 131C270 108 295 88 332 88C402 88 448 148 421 230C393 315 286 392 256 421Z" fill="none" stroke="url(#dn-heart)" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
