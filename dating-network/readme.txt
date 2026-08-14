@@ -2,10 +2,17 @@
 Contributors: alexandervandijl
 Requires at least: 6.5
 Requires PHP: 8.0
-Stable tag: 0.5.1
+Stable tag: 0.5.2
 License: GPLv2 or later
 
 Veilig datingplatform voor 18+ singles met wederzijdse man-vrouw matching, interne chat en uitlegbare matchscore.
+
+== 0.5.2 ==
+* Beheerders kunnen in de opstartfase alle Dating Network-chats monitoren via Dating Network > Chatmonitor.
+* Chatmonitor toont deelnemers, status, aantal berichten, laatste activiteit, preview en volledige gesprekshistorie.
+* Alleen WordPress-beheerders met manage_options krijgen toegang tot de monitor.
+* Gebruikers krijgen in de chat een duidelijke melding dat bevoegde beheerders gesprekken in de opstartfase kunnen controleren voor veiligheid, misbruikpreventie en kwaliteitscontrole.
+* Chatmonitoring kan later via een beheerinstelling worden uitgeschakeld.
 
 == 0.5.1 ==
 * Profielfoto upload met verplichte verklaring dat het een echte foto van de gebruiker zelf is.
