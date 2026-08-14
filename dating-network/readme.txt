@@ -2,10 +2,20 @@
 Contributors: alexandervandijl
 Requires at least: 6.5
 Requires PHP: 8.0
-Stable tag: 0.5.9
+Stable tag: 0.6.0
 License: GPLv2 or later
 
 Gratis datingplatform voor 18+ singles met wederzijdse man-vrouw matching, interne chat en uitlegbare matchscore.
+
+== 0.6.0 ==
+* Bij “Melden & ophangen” kan één stilstaand bewijsscreenshot van de remote video worden vastgelegd; er is geen continue opname.
+* Gebruikers worden vóór het videobellen expliciet geïnformeerd over deze rapport-triggered veiligheidsfunctie.
+* Alleen het beeld van de gemelde match wordt vastgelegd; de eigen camera van de melder wordt niet als bewijs opgeslagen.
+* Bewijs wordt in een afgeschermde databasetabel opgeslagen en is alleen zichtbaar voor beheerders met manage_options.
+* Nieuwe beheerpagina Dating Network > Videobewijs met rapport, melder, gemelde gebruiker, match en integriteitshash.
+* Screenshots worden standaard 30 dagen na koppeling aan een melding verwijderd; afgebroken/onvoltooide bewijscaptures worden al na 15 minuten verwijderd.
+* Eén gebruikersmelding leidt niet automatisch tot een platformban; beheer beoordeelt screenshot, melding, eerdere signalen en context.
+* Persoonlijk blokkeren door de melder blijft mogelijk en is geen platformbrede sanctie.
 
 == 0.5.9 ==
 * Videoveiligheidslaag toegevoegd bovenop het eigen P2P-videobellen.
@@ -16,7 +26,7 @@ Gratis datingplatform voor 18+ singles met wederzijdse man-vrouw matching, inter
 * Ernstige videomeldingen komen in het bestaande interne vertrouwens- en risicosysteem terecht.
 * Nieuwe beheerpagina Dating Network > Videoveiligheid met videopogingen, camera-starts, succesvolle verbindingen, P2P-mislukkingen en videomeldingen.
 * Videomeldingen kunnen door beheer als afgehandeld, onterecht of opnieuw open worden gemarkeerd.
-* Technische call-events worden zonder video, audio of screenshots opgeslagen; Dating Network neemt videogesprekken niet heimelijk op.
+* Technische call-events worden zonder video of audio opgeslagen; Dating Network neemt videogesprekken niet heimelijk op.
 
 == 0.5.8 ==
 * Externe videoprovider vervangen door eigen 1-op-1 WebRTC-videobellen.
