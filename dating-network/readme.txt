@@ -2,10 +2,20 @@
 Contributors: alexandervandijl
 Requires at least: 6.5
 Requires PHP: 8.0
-Stable tag: 0.5.3
+Stable tag: 0.5.4
 License: GPLv2 or later
 
 Veilig datingplatform voor 18+ singles met wederzijdse man-vrouw matching, interne chat en uitlegbare matchscore.
+
+== 0.5.4 ==
+* Chatmonitor toont per gebruiker en gesprek een interne groen-oranje-rood aandachtssignaal.
+* Rood staat bovenaan, daarna oranje en daarna groen zodat beheer snel kan prioriteren.
+* Indicator gebruikt open meldingen, verhoogde veiligheidsmeldingen, beheersignalen, waarschuwingen, ontvangen blokkades, positieve waarderingen en beheerstatus.
+* Positieve waarderingen kunnen een normaal risicosignaal verlagen, maar overrulen geen beheerblokkade of serieuze open veiligheidsmeldingen.
+* Chatmonitor kan worden gefilterd op rood, oranje of groen.
+* Volledige chatweergave toont per deelnemer de redenen achter de interne indicatie en een directe link naar het vertrouwensdossier.
+* De indicator is uitsluitend intern, niet openbaar, verandert de matchscore niet en neemt geen automatische sanctiebeslissingen.
+* Groen betekent alleen dat er geen actuele interne aandachtssignalen zijn; het is geen veiligheidsgarantie of verificatiebadge.
 
 == 0.5.3 ==
 * Uitgebreid rapporteren vanuit chat met reden en vrije toelichting.
