@@ -2,14 +2,14 @@
 /**
  * Plugin Name: Dating Network
  * Description: Gratis datingplatform voor singles met wederzijdse matching, interne chat en uitlegbare matchscore.
- * Version: 0.5.9
+ * Version: 0.6.0
  * Author: Alexander van Dijl
  * Text Domain: dating-network
  */
 
 if (!defined('ABSPATH')) { exit; }
 
-define('DN_VERSION', '0.5.9');
+define('DN_VERSION', '0.6.0');
 define('DN_FILE', __FILE__);
 define('DN_DIR', plugin_dir_path(__FILE__));
 define('DN_URL', plugin_dir_url(__FILE__));
@@ -27,6 +27,7 @@ require_once DN_DIR . 'includes/class-dn-branding.php';
 require_once DN_DIR . 'includes/class-dn-growth.php';
 require_once DN_DIR . 'includes/class-dn-video.php';
 require_once DN_DIR . 'includes/class-dn-video-safety.php';
+require_once DN_DIR . 'includes/class-dn-video-evidence.php';
 require_once DN_DIR . 'includes/class-dn-admin.php';
 require_once DN_DIR . 'includes/class-dn-updater.php';
 
@@ -45,4 +46,10 @@ add_action('plugins_loaded', static function (): void {
     DN_Growth::init();
     DN_Video::init();
     DN_Video_Safety::init();
+    DN_Video_Evidence::init();
 });
+
+add_action('wp_enqueue_scripts', static function (): void {
+    if (!is_user_logged_in() || empty($_GET['dn_video']) || !class_exists('DN_Core') || DN_Core::current_page_key() !== 'chat') { return; }
+    wp_enqueue_script('dating-network-video-evidence-gate', DN_URL . 'assets/video-evidence-gate.js', [], DN_VERSION, true);
+}, 99);
