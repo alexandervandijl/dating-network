@@ -1,15 +1,15 @@
 {
   "name": "Dating Network",
   "slug": "dating-network",
-  "version": "0.5.1",
-  "download_url": "https://github.com/alexandervandijl/dating-network/releases/download/v0.5.1/dating-network.zip",
-  "checksum_sha256": "731594406964d96fa2e0b0c52ffce9e3856175c6ff537bcdc6f812e86dffcdf1",
+  "version": "0.5.2",
+  "download_url": "https://github.com/alexandervandijl/dating-network/releases/download/v0.5.2/dating-network.zip",
+  "checksum_sha256": "10b57385b9f41a6b77325e66c519e2f1d6c02ba34d05f3515851dc58079ee5b7",
   "requires": "6.5",
   "tested": "6.8",
   "requires_php": "8.0",
   "homepage": "https://dating.alexandervandijl.nl/",
   "sections": {
     "description": "Veilige datingsite voor singles met wederzijdse matching, interne chat en uitlegbare matchscore.",
-    "changelog": "Dating Network 0.5.1."
+    "changelog": "Dating Network 0.5.2."
   }
 }
