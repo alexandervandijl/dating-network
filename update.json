@@ -3,7 +3,7 @@
   "slug": "dating-network",
   "version": "0.5.2",
   "download_url": "https://github.com/alexandervandijl/dating-network/releases/download/v0.5.2/dating-network.zip",
-  "checksum_sha256": "10b57385b9f41a6b77325e66c519e2f1d6c02ba34d05f3515851dc58079ee5b7",
+  "checksum_sha256": "7ef0915970f07085512be7ebe97208d98612ffeddf0540315d2d0db84d5b80dc",
   "requires": "6.5",
   "tested": "6.8",
   "requires_php": "8.0",
