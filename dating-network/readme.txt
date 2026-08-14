@@ -2,10 +2,20 @@
 Contributors: alexandervandijl
 Requires at least: 6.5
 Requires PHP: 8.0
-Stable tag: 0.5.6
+Stable tag: 0.5.7
 License: GPLv2 or later
 
 Gratis datingplatform voor 18+ singles met wederzijdse man-vrouw matching, interne chat en uitlegbare matchscore.
+
+== 0.5.7 ==
+* 1-op-1 videobellen binnen een bestaande actieve match via Cloudflare RealtimeKit.
+* Videobelknop verschijnt alleen wanneer de beheerder de RealtimeKit-koppeling volledig heeft ingesteld.
+* Alleen de twee deelnemers van de actieve match kunnen de videoruimte openen.
+* Cloudflare API-token blijft server-side; gebruikers ontvangen alleen een tijdelijk participant-token.
+* Camera en microfoon worden pas gestart nadat de gebruiker expliciet op de videobelknop klikt.
+* Dating Network schakelt opnemen, transcriptie en livestreaming niet automatisch in voor meetings.
+* Beheerpagina Dating Network > Videobellen voor Account ID, App ID, API-token en een veilige GROUP_CALL-preset.
+* Voor activatie wordt een preset vereist waarin ingebouwde chat, recording, livestreaming en screensharing zijn uitgeschakeld.
 
 == 0.5.6 ==
 * Nieuwe Eerste 100-groeimodule met teller op basis van complete actieve, match-klare profielen.
