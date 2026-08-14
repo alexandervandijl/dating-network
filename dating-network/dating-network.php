@@ -30,10 +30,10 @@ register_activation_hook(__FILE__, ['DN_Install', 'activate']);
 add_action('plugins_loaded', static function (): void {
     DN_Install::maybe_upgrade();
     DN_Updater::init();
+    if (is_admin()) { DN_Admin::init(); }
     DN_Reputation::init();
     DN_Core::init();
     DN_Shortcodes::init();
     DN_Photos::init();
     DN_Chat_Monitor::init();
-    if (is_admin()) { DN_Admin::init(); }
 });
