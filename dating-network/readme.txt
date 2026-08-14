@@ -2,10 +2,19 @@
 Contributors: alexandervandijl
 Requires at least: 6.5
 Requires PHP: 8.0
-Stable tag: 0.5.5
+Stable tag: 0.5.6
 License: GPLv2 or later
 
 Gratis datingplatform voor 18+ singles met wederzijdse man-vrouw matching, interne chat en uitlegbare matchscore.
+
+== 0.5.6 ==
+* Nieuwe Eerste 100-groeimodule met teller op basis van complete actieve, match-klare profielen.
+* Iedere ingelogde gebruiker krijgt een persoonlijke uitnodigingslink met WhatsApp-, Facebook- en kopieerknoppen.
+* Persoonlijk overzicht toont unieke referralbezoekers, aanmeldingen en hoeveel uitgenodigde gebruikers match-klaar zijn geworden.
+* Nieuwe beheerpagina Dating Network > Groei & statistieken met de volledige funnel van account naar e-mailverificatie, match-klaar profiel, foto, interesse, match, chat en iemand gevonden.
+* Campagnes kunnen met ?dn_src= worden gemeten; speciale links voor Knipmodel Network en Facebook staan direct in het dashboard.
+* Referral- en campagnebezoeken worden zonder opslag van ruwe IP-adressen gemeten en per bezoeker/campagne maximaal eenmaal per uur geteld.
+* Dashboard toont aanmeldingen per bron en de beste uitnodigers.
 
 == 0.5.5 ==
 * Nieuwe Dating Network-branding met navy, berry, coral en blush als vaste kleuren.
@@ -42,7 +51,7 @@ Gratis datingplatform voor 18+ singles met wederzijdse man-vrouw matching, inter
 * Chatmonitor toont deelnemers, status, aantal berichten, laatste activiteit, preview en volledige gesprekshistorie.
 * Alleen WordPress-beheerders met manage_options krijgen toegang tot de monitor.
 * Gebruikers krijgen in de chat een duidelijke melding dat bevoegde beheerders gesprekken in de opstartfase kunnen controleren voor veiligheid, misbruikpreventie en kwaliteitscontrole.
-* Chatmonitoring kan later via beheerinstelling worden uitgeschakeld.
+* Chatmonitoring kan later via een beheerinstelling worden uitgeschakeld.
 
 == 0.5.1 ==
 * Profielfoto upload met verplichte verklaring dat het een echte foto van de gebruiker zelf is.
