@@ -14,7 +14,8 @@ class DN_Video
     {
         return (string)get_option('dn_cf_account') !== ''
             && (string)get_option('dn_cf_app') !== ''
-            && (string)get_option('dn_cf_token') !== '';
+            && (string)get_option('dn_cf_token') !== ''
+            && (string)get_option('dn_cf_preset') !== '';
     }
 
     private static function active_match(int $match_id, int $user_id)
@@ -133,7 +134,7 @@ class DN_Video
             }
         }
 
-        $preset = (string)get_option('dn_cf_preset', 'group-call-host');
+        $preset = (string)get_option('dn_cf_preset', '');
         $user = get_userdata($user_id);
         $response = self::api('POST', 'meetings/' . rawurlencode($meeting_id) . '/participants', [
             'name' => $user ? $user->display_name : 'Single',
@@ -176,7 +177,7 @@ class DN_Video
         update_option('dn_cf_account', sanitize_text_field(wp_unslash($_POST['account'] ?? '')));
         update_option('dn_cf_app', sanitize_text_field(wp_unslash($_POST['app'] ?? '')));
         update_option('dn_cf_token', sanitize_text_field(wp_unslash($_POST['token'] ?? '')));
-        update_option('dn_cf_preset', sanitize_text_field(wp_unslash($_POST['preset'] ?? 'group-call-host')));
+        update_option('dn_cf_preset', sanitize_text_field(wp_unslash($_POST['preset'] ?? '')));
         wp_safe_redirect(admin_url('admin.php?page=dating-network-video&saved=1'));
         exit;
     }
@@ -188,6 +189,7 @@ class DN_Video
         <div class="wrap">
             <h1>Dating Network · Videobellen</h1>
             <p>Cloudflare RealtimeKit-koppeling. Het API-token blijft op de server; leden krijgen alleen een tijdelijk deelnemertoken voor hun eigen match.</p>
+            <p><strong>De videobelknop verschijnt pas nadat alle vier velden zijn ingevuld.</strong> Gebruik een aparte GROUP_CALL-preset waarin ingebouwde chat, recording, livestreaming en screensharing zijn uitgeschakeld. Zo blijven contact en moderatie bij Dating Network.</p>
             <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
                 <?php wp_nonce_field('dn_video_save'); ?>
                 <input type="hidden" name="action" value="dn_video_save">
@@ -195,7 +197,7 @@ class DN_Video
                     <tr><th>Cloudflare Account ID</th><td><input class="regular-text" name="account" value="<?php echo esc_attr((string)get_option('dn_cf_account')); ?>"></td></tr>
                     <tr><th>RealtimeKit App ID</th><td><input class="regular-text" name="app" value="<?php echo esc_attr((string)get_option('dn_cf_app')); ?>"></td></tr>
                     <tr><th>API-token</th><td><input class="regular-text" type="password" name="token" value="<?php echo esc_attr((string)get_option('dn_cf_token')); ?>" autocomplete="off"></td></tr>
-                    <tr><th>GROUP_CALL preset</th><td><input class="regular-text" name="preset" value="<?php echo esc_attr((string)get_option('dn_cf_preset', 'group-call-host')); ?>"><p class="description">Kies bij voorkeur een preset zonder recording, livestreaming en ingebouwde chat.</p></td></tr>
+                    <tr><th>Veilige GROUP_CALL-preset</th><td><input class="regular-text" name="preset" value="<?php echo esc_attr((string)get_option('dn_cf_preset', '')); ?>"><p class="description">Vul hier pas de presetnaam in nadat chat, recording, livestreaming en screensharing voor die preset zijn uitgezet.</p></td></tr>
                 </table>
                 <?php submit_button('Opslaan'); ?>
             </form>
