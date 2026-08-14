@@ -68,6 +68,7 @@ class DN_Branding
     private static function home(string $output): string
     {
         $replacements = [
+            '♥</span> Dating Network' => '♥</span> Dating <b>Network</b>',
             'VOOR SINGLES · MAN ↔ VROUW · 18+' => 'GRATIS EN BLIJFT GRATIS · VOOR SINGLES · 18+',
             'Vind iemand met wie je <em>écht</em> verder wilt.' => 'Echte mensen.<br><em>Echte connecties.</em>',
             'Geen eindeloos swipen. Geen betaalmuur tussen jou en een match. We kijken naar wat voor jullie allebei belangrijk is — en helpen je richting een echte ontmoeting.' => 'Dating Network is gratis en blijft gratis. Geen premium matches, geen betaalde zichtbaarheid en geen trucjes om je langer te laten swipen. Gewoon een eerlijke kans om iemand te vinden met wie je écht verder wilt.',
@@ -85,7 +86,7 @@ class DN_Branding
 
         $output = str_replace(array_keys($replacements), array_values($replacements), $output);
 
-        $promise = '<section class="dn-free-promise"><div class="dn-free-promise-mark">♥</div><div><span>ONZE BELofte</span><h2>Gratis. En dat blijft zo.</h2><p>Een profiel maken, passende singles ontdekken, matchen en intern chatten kost niets — nu niet en later niet. Er komt geen premiumlaag die betere mensen, extra zichtbaarheid of meer kans op een match vrijspeelt.</p></div><div class="dn-free-price"><strong>€0</strong><small>datingkosten</small></div></section>';
+        $promise = '<section class="dn-free-promise"><div class="dn-free-promise-mark">♥</div><div><span>ONZE BELOFTE</span><h2>Gratis. En dat blijft zo.</h2><p>Een profiel maken, passende singles ontdekken, matchen en intern chatten kost niets — nu niet en later niet. Er komt geen premiumlaag die betere mensen, extra zichtbaarheid of meer kans op een match vrijspeelt.</p></div><div class="dn-free-price"><strong>€0</strong><small>datingkosten</small></div></section>';
         $needle = '<section class="dn-values">';
         if (str_contains($output, $needle)) {
             $output = str_replace($needle, $promise . $needle, $output);
