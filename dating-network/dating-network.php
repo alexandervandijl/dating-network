@@ -48,3 +48,8 @@ add_action('plugins_loaded', static function (): void {
     DN_Video_Safety::init();
     DN_Video_Evidence::init();
 });
+
+add_action('wp_enqueue_scripts', static function (): void {
+    if (!is_user_logged_in() || empty($_GET['dn_video']) || !class_exists('DN_Core') || DN_Core::current_page_key() !== 'chat') { return; }
+    wp_enqueue_script('dating-network-video-evidence-gate', DN_URL . 'assets/video-evidence-gate.js', [], DN_VERSION, true);
+}, 99);
