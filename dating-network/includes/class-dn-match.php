@@ -12,6 +12,8 @@ class DN_Match
 
     public static function is_active(int $user_id): bool
     {
+        $moderation=(string)get_user_meta($user_id,'dn_admin_moderation_status',true);
+        if(in_array($moderation,['paused','blocked'],true)){return false;}
         $single=get_user_meta($user_id,'dn_single_confirmed',true)==='1'||get_user_meta($user_id,'dn_is_single',true)==='1';
         return get_user_meta($user_id,'dn_email_verified',true)==='1'&&$single&&(string)get_user_meta($user_id,'dn_profile_status',true)==='active';
     }
