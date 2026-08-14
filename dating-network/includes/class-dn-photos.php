@@ -11,9 +11,10 @@ class DN_Photos
         add_filter('do_shortcode_tag', [self::class, 'extend_shortcodes'], 20, 4);
         add_action('admin_menu', [self::class, 'admin_menu']);
         add_action('admin_post_dn_photo_review', [self::class, 'handle_review']);
+        add_action('delete_user', [self::class, 'delete_user_photos']);
     }
 
-    public static function extend_shortcodes(string $output, string $tag, array $attr, array $match): string
+    public static function extend_shortcodes(string $output, string $tag, $attr, $match): string
     {
         if ($tag === 'dating_network_profile' && is_user_logged_in()) {
             return $output . self::profile_panel(get_current_user_id());
@@ -92,14 +93,16 @@ class DN_Photos
             'post_content' => '',
         ]);
 
-        // Re-encode waar WordPress dit ondersteunt. Dit verwijdert doorgaans EXIF/GPS-metadata uit de opgeslagen afbeelding.
+        // Re-encode waar WordPress dit ondersteunt. Dit verwijdert doorgaans EXIF/GPS-metadata.
         $path = get_attached_file($attachment_id);
         if ($path && is_string($path)) {
             $editor = wp_get_image_editor($path);
             if (!is_wp_error($editor)) {
                 $editor->set_quality(90);
-                $editor->save($path);
-                wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $path));
+                $saved = $editor->save($path);
+                if (!is_wp_error($saved)) {
+                    wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $path));
+                }
             }
         }
 
@@ -255,7 +258,7 @@ class DN_Photos
             <div class="card" style="max-width:none">
                 <div style="aspect-ratio:4/3;overflow:hidden;background:#eee;border-radius:8px;margin-bottom:12px"><?php echo wp_get_attachment_image($photo_id,'medium_large',false,['style'=>'width:100%;height:100%;object-fit:cover']); ?></div>
                 <h2><?php echo esc_html($user ? $user->display_name : 'Onbekende gebruiker'); ?></h2>
-                <ul><li>✓ Verklaart: echte eigen persoonsfoto</li><li>✓ Verklaart: gebruiks-/publicatierechten</li><li>✓ Verklaart: geen promotie/contactgegevens</li><li><?php echo get_post_meta($photo_id,'_dn_photo_home_consent',true)==='1'?'✓':'–'; ?> Homepage-toestemming</li></ul>
+                <ul><li>✓ Verklaart: echte foto van zichzelf</li><li>✓ Verklaart: benodigde gebruiks- en publicatierechten</li><li>✓ Verklaart: geen promotie/contactgegevens</li><li><?php echo get_post_meta($photo_id,'_dn_photo_home_consent',true)==='1'?'✓':'–'; ?> Homepage-toestemming</li></ul>
                 <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
                     <?php wp_nonce_field('dn_photo_review_'.$photo_id); ?>
                     <input type="hidden" name="action" value="dn_photo_review"><input type="hidden" name="photo_id" value="<?php echo (int)$photo_id; ?>">
@@ -305,5 +308,20 @@ class DN_Photos
 
         wp_safe_redirect(admin_url('admin.php?page=dating-network-photos'));
         exit;
+    }
+
+    public static function delete_user_photos(int $user_id): void
+    {
+        $ids = get_posts([
+            'post_type' => 'attachment',
+            'post_status' => 'inherit',
+            'posts_per_page' => -1,
+            'fields' => 'ids',
+            'meta_key' => '_dn_photo_owner',
+            'meta_value' => $user_id,
+        ]);
+        foreach ($ids as $photo_id) {
+            wp_delete_attachment((int)$photo_id, true);
+        }
     }
 }
