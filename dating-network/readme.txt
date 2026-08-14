@@ -2,10 +2,19 @@
 Contributors: alexandervandijl
 Requires at least: 6.5
 Requires PHP: 8.0
-Stable tag: 0.5.2
+Stable tag: 0.5.3
 License: GPLv2 or later
 
 Veilig datingplatform voor 18+ singles met wederzijdse man-vrouw matching, interne chat en uitlegbare matchscore.
+
+== 0.5.3 ==
+* Uitgebreid rapporteren vanuit chat met reden en vrije toelichting.
+* Gebruikers kunnen een vervelende chatter voor zichzelf blokkeren; de chat stopt direct en beide profielen worden niet meer aan elkaar getoond.
+* Nieuw beheeronderdeel Dating Network > Gebruikers & vertrouwen met een intern dossier per gebruiker.
+* Beheerder kan positieve waarderingen registreren voor respectvol, betrouwbaar en constructief gedrag.
+* Beheerder kan negatieve signalen registreren en waarschuwingen, pauzes of volledige blokkades uitvoeren.
+* Positieve en negatieve signalen zijn niet publiek en beïnvloeden de matchscore niet automatisch.
+* Gebruikers zien privé wanneer Dating Network hun goed gedrag positief heeft gewaardeerd.
 
 == 0.5.2 ==
 * Beheerders kunnen in de opstartfase alle Dating Network-chats monitoren via Dating Network > Chatmonitor.
