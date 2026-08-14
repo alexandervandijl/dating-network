@@ -153,7 +153,6 @@ class DN_Growth
         $code = self::code_for_user($user_id);
         $link = add_query_arg(['dn_ref' => $code, 'dn_src' => 'member_invite'], DN_Core::page_url('register'));
         $table = $wpdb->prefix . 'dn_growth_clicks';
-        $clicks = (int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$table} WHERE referrer_id=%d", $user_id));
         $unique = (int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(DISTINCT visitor_hash) FROM {$table} WHERE referrer_id=%d", $user_id));
         $referred = self::referred_count($user_id, false);
         $active_referred = self::referred_count($user_id, true);
@@ -199,10 +198,11 @@ class DN_Growth
     private static function referred_count(int $referrer_id, bool $active_only): int
     {
         global $wpdb;
-        $sql = "SELECT COUNT(DISTINCT r.user_id) FROM {$wpdb->usermeta} r INNER JOIN {$wpdb->usermeta} c ON c.user_id=r.user_id AND c.meta_key='dn_consent' WHERE r.meta_key='dn_referred_by' AND r.meta_value=%s";
+        $joins = " INNER JOIN {$wpdb->usermeta} c ON c.user_id=r.user_id AND c.meta_key='dn_consent'";
         if ($active_only) {
-            $sql .= " INNER JOIN {$wpdb->usermeta} s ON s.user_id=r.user_id AND s.meta_key='dn_profile_status' AND s.meta_value='active'";
+            $joins .= " INNER JOIN {$wpdb->usermeta} s ON s.user_id=r.user_id AND s.meta_key='dn_profile_status' AND s.meta_value='active'";
         }
+        $sql = "SELECT COUNT(DISTINCT r.user_id) FROM {$wpdb->usermeta} r{$joins} WHERE r.meta_key='dn_referred_by' AND r.meta_value=%s";
         return (int)$wpdb->get_var($wpdb->prepare($sql, (string)$referrer_id));
     }
 
