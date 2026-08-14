@@ -2,14 +2,14 @@
 /**
  * Plugin Name: Dating Network
  * Description: Gratis datingplatform voor singles met wederzijdse matching, interne chat en uitlegbare matchscore.
- * Version: 0.5.6
+ * Version: 0.5.7
  * Author: Alexander van Dijl
  * Text Domain: dating-network
  */
 
 if (!defined('ABSPATH')) { exit; }
 
-define('DN_VERSION', '0.5.6');
+define('DN_VERSION', '0.5.7');
 define('DN_FILE', __FILE__);
 define('DN_DIR', plugin_dir_path(__FILE__));
 define('DN_URL', plugin_dir_url(__FILE__));
@@ -25,6 +25,7 @@ require_once DN_DIR . 'includes/class-dn-risk.php';
 require_once DN_DIR . 'includes/class-dn-chat-monitor.php';
 require_once DN_DIR . 'includes/class-dn-branding.php';
 require_once DN_DIR . 'includes/class-dn-growth.php';
+require_once DN_DIR . 'includes/class-dn-video.php';
 require_once DN_DIR . 'includes/class-dn-admin.php';
 require_once DN_DIR . 'includes/class-dn-updater.php';
 
@@ -41,4 +42,5 @@ add_action('plugins_loaded', static function (): void {
     DN_Chat_Monitor::init();
     DN_Branding::init();
     DN_Growth::init();
+    DN_Video::init();
 });
